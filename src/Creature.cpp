@@ -1,0 +1,4 @@
+// Base Creature Class
+// Definitions
+
+
