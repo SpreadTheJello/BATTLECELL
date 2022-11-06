@@ -2,6 +2,7 @@
 #define _GAME_HPP_
 
 #include "Console.hpp"
+using namespace std;
 
 class Game {
     private:
@@ -12,7 +13,7 @@ class Game {
         ~Game();
 
         // returns true to keep playing, or false to end the game loop
-        bool ProcessCommand(std::string command, std::string mainArg, std::string fullArg);
+        bool ProcessCommand(string command, std::string mainArg, std::string fullArg);
 };
 
 #endif // _GAME_HPP_

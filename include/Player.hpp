@@ -4,13 +4,15 @@
 #include "Creature.hpp"
 
 class Player : public Creature {
-private:
+  private:
     unsigned int gold;
     unsigned int sustain;
 
-public:
+  public:
     Player(std::string& name, unsigned int option);
     ~Player();
+
+    void ImproveSustain(int up);
 
     bool Pay(unsigned int goldCost);
 

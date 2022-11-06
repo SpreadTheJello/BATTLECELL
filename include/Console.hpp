@@ -3,35 +3,37 @@
 
 #include <string>
 #include <iostream>
+using namespace std;
 
 class Console {
 private:
-    //std::ostream m_outStream;
-    static const std::string Blue;
-    static const std::string Cyan;
-    static const std::string Gray;
-    static const std::string Green;
-    static const std::string Purple;
-    static const std::string Red;
-    static const std::string Reset;
-    static const std::string White;
-    static const std::string Yellow;
+    //ostream m_outStream;
+    static const string Blue;
+    static const string Cyan;
+    static const string Gray;
+    static const string Green;
+    static const string Purple;
+    static const string Red;
+    static const string Reset;
+    static const string White;
+    static const string Yellow;
 
 public:
     Console();
     ~Console();
 
-    static const std::string ResetColour;
-    static const std::string BadColour;
-    static const std::string CommandColour;
-    static const std::string ItemColour;
-    static const std::string MagicColour;
-    static const std::string NameColour;
-    static const std::string SuccessColour;
+    static const string ResetColour;
+    static const string BadColour;
+    static const string CommandColour;
+    static const string ItemColour;
+    static const string MagicColour;
+    static const string NameColour;
+    static const string SuccessColour;
 
-    void Write(std::string out) const noexcept;
-    void WriteLine(std::string outLine = "") const noexcept;
-    void WriteCommandNotFound(std::string unknownCommand) const noexcept;
+    void Write(string out) const noexcept;
+    void WriteLine(string outLine = "") const noexcept;
+    void WriteCommandNotFound(string unknownCommand) const noexcept;
+    void printFile(string name, int milliseconds) const noexcept;
 };
 
 #endif // _CONSOLE_HPP_

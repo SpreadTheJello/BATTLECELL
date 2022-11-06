@@ -3,10 +3,9 @@
 #include <vector>
 #include <iterator>
 #include <iostream>
-#include <thread>
-#include <chrono>
 using namespace std;
 
+#include "Game.hpp"
 
 vector<string> split(const string &s, char delim) {
     vector<string> elems;
@@ -18,40 +17,20 @@ vector<string> split(const string &s, char delim) {
     return elems;
 }
 
-#include "Game.hpp"
 
 int main(int argc, char ** args)
 {
     Console * console = new Console();
     Game * game = new Game();
-
-    // begins game loop
     string lineIn;
+    
     console->Write("\n\n\n\n\n\n\n\n\n");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine(" ▄▄▄▄    ▄▄▄     ▄▄▄█████▓▄▄▄█████▓ ██▓    ▓█████  ▄████▄  ▓█████  ██▓     ██▓    ");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine("▓█████▄ ▒████▄   ▓  ██▒ ▓▒▓  ██▒ ▓▒▓██▒    ▓█   ▀ ▒██▀ ▀█  ▓█   ▀ ▓██▒    ▓██▒    ");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine("▒██▒ ▄██▒██  ▀█▄ ▒ ▓██░ ▒░▒ ▓██░ ▒░▒██░    ▒███   ▒▓█    ▄ ▒███   ▒██░    ▒██░    ");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine("▒██░█▀  ░██▄▄▄▄██░ ▓██▓ ░ ░ ▓██▓ ░ ▒██░    ▒▓█  ▄ ▒▓▓▄ ▄██▒▒▓█  ▄ ▒██░    ▒██░    ");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine("░▓█  ▀█▓ ▓█   ▓██▒ ▒██▒ ░   ▒██▒ ░ ░██████▒░▒████▒▒ ▓███▀ ░░▒████▒░██████▒░██████▒");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine("░▒▓███▀▒ ▒▒   ▓▒█░ ▒ ░░     ▒ ░░   ░ ▒░▓  ░░░ ▒░ ░░ ░▒ ▒  ░░░ ▒░ ░░ ▒░▓  ░░ ▒░▓  ░");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine("▒░▒   ░   ▒   ▒▒ ░   ░        ░    ░ ░ ▒  ░ ░ ░  ░  ░  ▒    ░ ░  ░░ ░ ▒  ░░ ░ ▒  ░");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine(" ░    ░   ░   ▒    ░        ░        ░ ░      ░   ░           ░     ░ ░     ░ ░   ");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine(" ░            ░  ░                     ░  ░   ░  ░░ ░         ░  ░    ░  ░    ░  ░");
-    this_thread::sleep_for(chrono::milliseconds(200));
-    console->WriteLine("      ░                                           ░                               ");
-    this_thread::sleep_for(chrono::milliseconds(200));
+    console->printFile("title", 200);
     console->WriteLine("\t\t\t\tWelcome to Battlecell!\n");
     console->WriteLine("Menu: From here, you can start a {new} game, or {exit}! At any time, {help} will tell you the available commands.");
     console->Write("\n> ");
+    
+    // begins game loop
     while (getline(cin, lineIn)) {
         if (lineIn.size() > 0) {
             vector<string> input = split(lineIn, ' ');

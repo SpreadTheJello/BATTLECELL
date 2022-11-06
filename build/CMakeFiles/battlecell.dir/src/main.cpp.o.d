@@ -228,6 +228,5 @@ CMakeFiles/battlecell.dir/src/main.cpp.o: \
   /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/vector \
   /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/__split_buffer \
   /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/iostream \
-  /Library/Developer/CommandLineTools/usr/bin/../include/c++/v1/thread \
   /Users/mrjello/Desktop/CSE-Projects/CSE165/CSE165GameProject/include/Game.hpp \
   /Users/mrjello/Desktop/CSE-Projects/CSE165/CSE165GameProject/include/Console.hpp

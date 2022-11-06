@@ -28,13 +28,18 @@ class Creature {
     // Functions for Combat
     bool isAlive(); // return (currentHP>0);
 
-    bool DealDamage(int damage); // Calculates damage creature takes
-    void Heal(); // Heals taken damage
-    unsigned int CurrentHealth(); // returns;
+    bool DealDamage(int amount); // Calculates damage creature takes and reduces currentHealth accordingly.
+    void Heal(int amount); // Heals taken damage.
+    unsigned int CurrentHealth(); // prints current health out of maximum health;
 
     unsigned int GetDodge();
+    unsigned int GetArmor();
+    unsigned int GetDamage();
 
     void ImproveHP(int up);
+    void ImproveDodge(int up);
+    void ImproveDamage(int up);
+    void ImproveArmor(int up);
     
 
 
