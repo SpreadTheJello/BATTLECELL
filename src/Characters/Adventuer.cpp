@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "include/Creature.hpp"
-#include "include/Player.hpp"
+#include "Creature.hpp"
+#include "Player.hpp"
 
 class Adventuer : public Creature {
      public: 

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "include/Creature.hpp"
+#include "Creature.hpp"
 
 class Paladin : public Creature {
      public: 

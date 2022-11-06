@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "include/Creature.hpp"
+#include "Creature.hpp"
 
 class Skeleton : public Creature {
      public: 
