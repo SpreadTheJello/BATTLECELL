@@ -15,8 +15,10 @@ class Creature {
     unsigned int damage;
     unsigned int armor;
     unsigned int dodge;
+    unsigned int sustain;
 
   public:
+    Creature(){};
     Creature(string name, unsigned int hp, unsigned int dam, unsigned int arm, unsigned int dog);
     Creature(Creature& creature);
 

@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-#include "Game.hpp"
+#include "include/Game.hpp"
 
 vector<string> split(const string &s, char delim) {
     vector<string> elems;

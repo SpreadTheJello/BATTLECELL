@@ -9,6 +9,7 @@ class Player : public Creature {
     unsigned int sustain;
 
   public:
+    enum p_Classes{Adventuer, Champion, Paladin, Ranger, Rogue};
     Player(std::string& name, unsigned int option);
     ~Player();
 
