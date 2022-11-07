@@ -5,6 +5,7 @@
 #include "Console.hpp"
 using namespace std;
 
+// colors
 const string Console::Gray   = "\x1b[30m";
 const string Console::Red    = "\x1b[31m";
 const string Console::Green  = "\x1b[32m";
