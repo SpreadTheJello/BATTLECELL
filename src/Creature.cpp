@@ -124,3 +124,12 @@ void Creature::combatAction(Creature& enemy) {
     }
 }
 
+//checks the status of whatever object we pass in
+void Creature::status(Creature& creature){
+    m_logger->WriteLine("Here are the stats");
+    m_logger->WriteLine("Health: " + creature.currentHP);
+    m_logger->WriteLine("Damage: " + creature.damage);
+    m_logger->WriteLine("armor: " + creature.armor);
+
+}
+

@@ -4,6 +4,12 @@
 #include "Creature.hpp"
 
 class Monster : public Creature {
+    private:
+        unsigned int maxHP;
+        unsigned int currentHP;
+        unsigned int damage;
+        unsigned int armor;
+        unsigned int dodge;
 
     public:
         Monster();

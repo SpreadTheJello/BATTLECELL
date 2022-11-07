@@ -39,6 +39,7 @@ class Creature {
     void Heal(int amount); // Heals taken damage.
     
     void combatAction(Creature& enemy);
+    void status(Creature& creature);
 
 };
 
