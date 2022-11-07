@@ -51,6 +51,7 @@ class Player : public Creature {
 
     unsigned int getMaxHealthStat() const;
     unsigned int getBaseHealthStat() const; 
+    unsigned int getCurrentMaxHP() const;
 
     unsigned int getMaxDodge() const;
     unsigned int getBaseDodge() const;

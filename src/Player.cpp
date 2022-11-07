@@ -123,12 +123,12 @@ Player::Player(string name, p_Classes option) {
                break;
      }
 
-     this->gold = 5;
+     this->gold = 5; //player starts off with 5 gold
 }
 
 
 
-/* Getters */
+/* Getters */ 
 
 // Returns player's gold
 unsigned int Player::getGold() const{
@@ -155,6 +155,11 @@ unsigned int Player::getMaxHealthStat() const{
 // Returns BaseHealthStat
 unsigned int Player::getBaseHealthStat() const{
      return this->baseHealthStat;
+}
+
+// Returns Current maxHP
+unsigned int Player::getCurrentMaxHP() const{
+     return this->maxHP;
 }
 
 // Returns MaxDodge
