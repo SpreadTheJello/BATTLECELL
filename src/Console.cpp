@@ -1,8 +1,8 @@
-#include "Console.hpp"
 #include <iomanip>
 #include <fstream>
 #include <chrono>
 #include <thread>
+#include "Console.hpp"
 using namespace std;
 
 const string Console::Gray   = "\x1b[30m";
@@ -39,6 +39,32 @@ void Console::WriteLine(string outLine) const noexcept {
 
 void Console::WriteCommandNotFound(string unknownCommand) const noexcept {
     WriteLine("Looks like '" + unknownCommand + "' is not a valid command; try 'help'.");
+}
+
+void Console::WriteHelp(GAMESTATE gameState) const noexcept {
+    WriteLine("Available commands:");
+    
+    switch(gameState){
+        case GAMESTATE::MENU:
+            WriteLine("  {new} - Start a new game.");
+            WriteLine("  {exit} - Exit the game.");
+            break;
+    
+        case GAMESTATE::GAME:
+            WriteLine("  {help} - Display this help message.");
+            WriteLine("  {exit} - Exit the game.");
+            WriteLine("  {loot} - Loot available items in room.");
+            WriteLine("  {go} - Move to a different room.");
+            WriteLine("  {inventory} - Display your inventory.");
+            WriteLine("  {equip} - Equip an item from your inventory.");
+            WriteLine("  {unequip} - Unequip an item from your inventory.");
+            WriteLine("  {stats} - Display your stats.");
+            WriteLine("  {attack} - Attack a monster in the room.");
+        default:
+            break;
+    }
+    WriteLine("  {help} - Display this help message.");
+    WriteLine("  {exit} - Exit the game.");
 }
 
 // loop through file and print each line with a delay

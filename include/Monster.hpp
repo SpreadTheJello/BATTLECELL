@@ -2,12 +2,12 @@
 #define _Monster_HPP_
 
 #include "Creature.hpp"
-using namespace std;
 
 class Monster : public Creature {
 
     public:
-        Monster(string& name, unsigned int option);
+        Monster();
+        Monster(std::string name, unsigned int option);
         ~Monster();
     };
 
