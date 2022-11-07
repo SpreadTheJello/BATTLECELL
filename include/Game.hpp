@@ -3,7 +3,6 @@
 
 #include "Console.hpp"
 #include "Creature.hpp"
-#include "Monster.hpp"
 #include "Player.hpp"
 
 

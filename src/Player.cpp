@@ -6,7 +6,6 @@ unsigned int static const statGoldCost = 2;
 
 // Player Constructor
 Player::Player(string name, p_Classes option) {
-
      this->name = name;
      
      // Sets stats based on Player Class option
@@ -130,6 +129,7 @@ Player::Player(string name, p_Classes option) {
 
 /* Getters */ 
 
+
 // Returns player's gold
 unsigned int Player::getGold() const{
      return this->gold;
@@ -155,11 +155,6 @@ unsigned int Player::getMaxHealthStat() const{
 // Returns BaseHealthStat
 unsigned int Player::getBaseHealthStat() const{
      return this->baseHealthStat;
-}
-
-// Returns Current maxHP
-unsigned int Player::getCurrentMaxHP() const{
-     return this->maxHP;
 }
 
 // Returns MaxDodge
@@ -191,18 +186,46 @@ unsigned int Player::getBaseDamage() const{
 
 
 
+/* Status Functions */
+
+
+// Prints player stats. For {status} outside of combat.
+void Player::printStats() {
+     m_logger->WriteLine("Your stats:");
+     m_logger->WriteLine("Health: " + this->healthBar() + "  (" + to_string(this->currentHP) + "/" + to_string(this->maxHP) + ") --- max. " + to_string(this->maxHealthStat));
+     m_logger->WriteLine("Damage: " + to_string(this->damage) + " --- max. " + to_string(this->maxDamage));
+     m_logger->WriteLine("Armor: " + to_string(this->armor) + " --- max. " + to_string(this->maxArmor));
+     m_logger->WriteLine("Dodge: " + to_string(this->dodge) + "% --- max. " + to_string(this->maxDodge) + "%");
+     m_logger->WriteLine("Sustain: " + to_string(this->sustain) + "% --- max. " + to_string(this->maxSustain) + "%");
+}
+
+// Player combat status. Overrides Creature::combatStatus
+void Player::combatStatus() {
+     m_logger->WriteLine("Your status:");
+     m_logger->WriteLine("Health: " + this->healthBar() + "  (" + to_string(this->currentHP) + "/" + to_string(this->maxHP) + ")");
+     m_logger->WriteLine("Damage: " + to_string(this->damage));
+     m_logger->WriteLine("Armor: " + to_string(this->armor));
+     m_logger->WriteLine("Dodge: " + to_string(this->dodge) + "%");
+}
+
+
+
 /* Improve Stat Functions */
+
 
 // Improves Sustain stat up to its maximum
 bool Player::ImproveSustain(int up) {
      if (this->sustain == this->maxSustain){
+          m_logger->WriteLine("Cannot improve Sustain further.");
           return false;
      }
      else if (this->sustain + up > this->maxSustain){
           this->sustain = this->maxSustain;
+          m_logger->WriteLine("Improved Sustain to maximum.");
      }
      else{
           this->sustain += up;
+          m_logger->WriteLine("Improved Sustain by " + to_string(up) + ".");
      }
      return true;
 }
@@ -210,13 +233,16 @@ bool Player::ImproveSustain(int up) {
 // Improves MaxHP stat up to its maximum
 bool Player::ImproveHP(int up) {
      if (this->maxHP == this->maxHealthStat){
+          m_logger->WriteLine("Cannot improve Max HP further.");
           return false;
      }
      else if (this->maxHP + up > this->maxHealthStat){
           this->maxHP =this-> maxHealthStat;
+          m_logger->WriteLine("Improved Max HP to maximum.");
      }
      else{
           this->maxHP += up;
+          m_logger->WriteLine("Improved Max HP by " + to_string(up) + ".");
      }
      return true;
 }
@@ -224,13 +250,16 @@ bool Player::ImproveHP(int up) {
 // Improves Dodge stat up to its maximum
 bool Player::ImproveDodge(int up) {
      if (this->dodge == this->maxDodge){
+          m_logger->WriteLine("Cannot improve Dodge further.");
           return false;
      }
      else if (this->dodge + up > this->maxDodge){
           this->dodge = this->maxDodge;
+          m_logger->WriteLine("Improved Dodge to maximum.");
      }
      else{
           this->dodge += up;
+          m_logger->WriteLine("Improved Dodge by " + to_string(up) + ".");
      }
      return true;
 }
@@ -238,13 +267,16 @@ bool Player::ImproveDodge(int up) {
 // Improves Damage stat up to its maximum
 bool Player::ImproveDamage(int up) {
      if (this->damage == this->maxDamage){
+          m_logger->WriteLine("Cannot improve Damage further.");
           return false;
      }
      else if (this->damage + up > this->maxDamage){
           this->damage = this->maxDamage;
+          m_logger->WriteLine("Improved Damage to maximum.");
      }
      else{
           this->damage += up;
+          m_logger->WriteLine("Improved Damage by " + to_string(up) + ".");
      }
      return true;
 }
@@ -252,13 +284,16 @@ bool Player::ImproveDamage(int up) {
 // Improves Armor stat up to its maximum
 bool Player::ImproveArmor(int up) {
      if (this->armor == this->maxArmor){
+          m_logger->WriteLine("Cannot improve Armor further.");
           return false;
      }
      else if (this->armor + up > this->maxArmor){
           this->armor = this->maxArmor;
+          m_logger->WriteLine("Improved Armor to maximum.");
      }
      else{
           this->armor += up;
+          m_logger->WriteLine("Improved Armor by " + to_string(up) + ".");
      }
      return true;
 }
@@ -267,19 +302,75 @@ bool Player::ImproveArmor(int up) {
 
 /* Buy Stat Improvement functions */
 
-// !!!!!!!!!!!!!!!!!!    TODO    !!!!!!!!!!!!!!!!!!
-/* Decide whether to return enum value or print with m_logger */
 
-// Attempts to purchase Health Improvement 
-p_Purchases Player::BuyHealth() {
-     if (this->Pay(statGoldCost)) {
+// Attempts to purchase Health Improvement. Returns false if unable.
+bool Player::BuyHealth() {
+     if(this->maxHP == this->maxHealthStat) {
+          m_logger->WriteLine("Cannot improve Max HP further.");
+          return false;
+     } else if (this->Pay(statGoldCost)) {
           unsigned int improvement = (this->maxHealthStat - this->baseHealthStat) / 10;
-          if (ImproveHP(improvement)) {
-               return p_Purchases::BOUGHT;
-          }
-          return p_Purchases::IMPROVE;
-     } else 
-          return p_Purchases::CANNOT;
+          ImproveHP(improvement);
+          return true;
+     }
+     m_logger->WriteLine("Cannot afford improvement.");
+     return false;
+}
+
+// Attempts to purchase Armor Improvement. Returns false if unable.
+bool Player::BuyArmor() {
+     if(this->armor == this->maxArmor) {
+          m_logger->WriteLine("Cannot improve Armor further.");
+          return false;
+     } else if (this->Pay(statGoldCost)) {
+          unsigned int improvement = (this->maxArmor - this->baseArmor) / 10;
+          ImproveArmor(improvement);
+          return true;
+     }
+     m_logger->WriteLine("Cannot afford improvement.");
+     return false;
+}
+
+// Attempts to purchase Damage Improvement. Returns false if unable.
+bool Player::BuyDamage() {
+     if(this->damage == this->maxDamage) {
+          m_logger->WriteLine("Cannot improve Damage further.");
+          return false;
+     } else if (this->Pay(statGoldCost)) {
+          unsigned int improvement = (this->maxDamage - this->baseDamage) / 10;
+          ImproveDamage(improvement);
+          return true;
+     }
+     m_logger->WriteLine("Cannot afford improvement.");
+     return false;
+}
+
+// Attempts to purchase Dodge Improvement. Returns false if unable.
+bool Player::BuyDodge() {
+     if(this->dodge == this->maxDodge) {
+          m_logger->WriteLine("Cannot improve Dodge further.");
+          return false;
+     } else if (this->Pay(statGoldCost)) {
+          unsigned int improvement = (this->maxDodge - this->baseDodge) / 10;
+          ImproveHP(improvement);
+          return true;
+     }
+     m_logger->WriteLine("Cannot afford improvement.");
+     return false;
+}
+
+// Attempts to purchase Sustain Improvement. Returns false if unable.
+bool Player::BuySustain() {
+     if(this->sustain == this->maxSustain) {
+          m_logger->WriteLine("Cannot improve Sustain further.");
+          return false;
+     } else if (this->Pay(statGoldCost)) {
+          unsigned int improvement = (this->maxSustain - this->baseSustain) / 10;
+          ImproveHP(improvement);
+          return true;
+     }
+     m_logger->WriteLine("Cannot afford improvement.");
+     return false;
 }
 
 // Attempts to subtract goldCost from player's gold. Returns false if cannot make sufficient payment.

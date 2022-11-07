@@ -11,12 +11,6 @@ enum p_Classes{
   ROGUE
 };
 
-enum p_Purchases{
-  BOUGHT, // purchased
-  CANNOT, // cannot afford
-  IMPROVE // cannot improve stat further
-};
-
 class Player : public Creature {
   private:
     unsigned int gold;
@@ -50,8 +44,7 @@ class Player : public Creature {
     unsigned int getBaseSustain() const;
 
     unsigned int getMaxHealthStat() const;
-    unsigned int getBaseHealthStat() const; 
-    unsigned int getCurrentMaxHP() const;
+    unsigned int getBaseHealthStat() const;
 
     unsigned int getMaxDodge() const;
     unsigned int getBaseDodge() const;
@@ -62,7 +55,9 @@ class Player : public Creature {
     unsigned int getMaxDamage() const;
     unsigned int getBaseDamage() const;
 
-    
+    void printStats();
+    void combatStatus();
+
 
     bool ImproveSustain(int up);
     bool ImproveHP(int up);
@@ -71,12 +66,11 @@ class Player : public Creature {
     bool ImproveArmor(int up);
 
 
-
-    p_Purchases BuyHealth();
-    p_Purchases BuyDamage();
-    p_Purchases BuyDodge();
-    p_Purchases BuyArmor();
-    p_Purchases BuySustain();
+    bool BuyHealth();
+    bool BuyDamage();
+    bool BuyDodge();
+    bool BuyArmor();
+    bool BuySustain();
 
     bool Pay(unsigned int goldCost);
     void Reward(unsigned int gold);

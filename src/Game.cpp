@@ -155,12 +155,7 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 				m_logger->WriteLine("You are already in the game!");
 			}
 			if (command == "status"){
-				m_logger->WriteLine("Health: " + to_string(m_player->CurrentHealth()) + "/" + to_string(m_player->getCurrentMaxHP()));
-				m_logger->WriteLine("Armor: " + to_string(m_player->GetArmor()) + "/" + to_string(m_player->getMaxArmor()));
-				m_logger->WriteLine("Attack Damage: " + to_string(m_player->GetDamage()) + "/" + to_string(m_player->getMaxDamage()));
-				m_logger->WriteLine("Dodge: " + to_string(m_player->GetDodge()) + "/" + to_string(m_player->getMaxDodge()));
-				m_logger->WriteLine("Sustain: " + to_string(m_player->getSustain()) + "/" + to_string(m_player->getMaxSustain()));
-				m_logger->WriteLine("Gold: " + to_string(m_player->getGold()));
+				m_player->printStats();
 			}
 			break;
 		default:

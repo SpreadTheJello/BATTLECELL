@@ -20,6 +20,7 @@ Creature::~Creature() {
 // Default Constructor
 Creature::Creature() {
     m_logger = new Console();
+
     this->name = "n/a";
     this->currentHP = 0;
     this->maxHP = 0;
@@ -31,6 +32,7 @@ Creature::Creature() {
 // NEW Constructor
 Creature::Creature(string name, unsigned int hp, unsigned int dam, unsigned int arm, unsigned int dog) {
     m_logger = new Console();
+
     this->name = name;
     this->currentHP = hp;
     this->maxHP = hp;
@@ -42,6 +44,7 @@ Creature::Creature(string name, unsigned int hp, unsigned int dam, unsigned int 
 // Creature& Constructor
 Creature::Creature(Creature& creature) {
     m_logger = new Console();
+    
     this->name = creature.getName();
     this->currentHP = creature.CurrentHealth();
     this->maxHP = creature.GetMaxHP();
@@ -124,12 +127,30 @@ void Creature::combatAction(Creature& enemy) {
     }
 }
 
-//checks the status of whatever object we pass in
-void Creature::status(Creature& creature){
-    m_logger->WriteLine("Here are the stats");
-    m_logger->WriteLine("Health: " + creature.currentHP);
-    m_logger->WriteLine("Damage: " + creature.damage);
-    m_logger->WriteLine("armor: " + creature.armor);
+// returns Health Bar string
+string Creature::healthBar() {
+    string hBar = "[";
+    int hIncrement = floor(this->maxHP / 16);
+    int hpCounter = this->currentHP;
+    while (hpCounter > 0) {
+        hBar += "▒";
+        hpCounter -= hIncrement;
+    }
+    hpCounter = this->maxHP - this->currentHP;
+    while (hpCounter > 0) {
+        hBar += " ";
+        hpCounter -= hIncrement;
+    }
+    hBar += "]";
+    return hBar;
+}
 
+// Displays the stats of given creature.
+void Creature::combatStatus() {
+    m_logger->WriteLine(this->name + "'s status:");
+    m_logger->WriteLine("Health: " + this->healthBar() + "  (" + to_string(this->currentHP) + "/" + to_string(this->maxHP) + ")");
+    m_logger->WriteLine("Damage: " + to_string(this->damage));
+    m_logger->WriteLine("Armor: " + to_string(this->armor));
+    m_logger->WriteLine("Dodge: " + to_string(this->dodge));
 }
 
