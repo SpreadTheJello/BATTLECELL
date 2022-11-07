@@ -26,17 +26,17 @@ class Creature {
     ~Creature();
 
     std::string getName() const;
+    unsigned int CurrentHealth() const;
+    unsigned int GetMaxHP() const;
+    unsigned int GetDodge() const;
+    unsigned int GetArmor() const;
+    unsigned int GetDamage() const;
     
     // Functions for Combat
     bool isAlive(); // return (currentHP>0);
 
     bool DealDamage(int amount); // Calculates damage creature takes and reduces currentHealth accordingly. Return false if creature dies, true if still alive.
     void Heal(int amount); // Heals taken damage.
-    unsigned int CurrentHealth(); // prints current health out of maximum health;
-
-    unsigned int GetDodge();
-    unsigned int GetArmor();
-    unsigned int GetDamage();
     
     void combatAction(Creature& enemy);
 

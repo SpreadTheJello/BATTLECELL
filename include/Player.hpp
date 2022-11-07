@@ -42,7 +42,25 @@ class Player : public Creature {
     Player(std::string name, p_Classes option);
     ~Player();
 
-    unsigned int getSustain();
+
+    unsigned int getGold() const;
+
+    unsigned int getSustain() const;
+    unsigned int getMaxSustain() const;
+    unsigned int getBaseSustain() const;
+
+    unsigned int getMaxHealthStat() const;
+    unsigned int getBaseHealthStat() const; 
+
+    unsigned int getMaxDodge() const;
+    unsigned int getBaseDodge() const;
+
+    unsigned int getMaxArmor() const; 
+    unsigned int getBaseArmor() const;
+
+    unsigned int getMaxDamage() const;
+    unsigned int getBaseDamage() const;
+
     
 
     bool ImproveSustain(int up);
@@ -51,6 +69,8 @@ class Player : public Creature {
     bool ImproveDamage(int up);
     bool ImproveArmor(int up);
 
+
+
     p_Purchases BuyHealth();
     p_Purchases BuyDamage();
     p_Purchases BuyDodge();
@@ -58,7 +78,6 @@ class Player : public Creature {
     p_Purchases BuySustain();
 
     bool Pay(unsigned int goldCost);
-
     void Reward(unsigned int gold);
 
 };
