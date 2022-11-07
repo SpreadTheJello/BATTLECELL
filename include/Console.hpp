@@ -34,7 +34,7 @@ public:
     void WriteLine(std::string outLine = "") const noexcept;
     void WriteCommandNotFound(std::string unknownCommand) const noexcept;
     void WriteHelp(GAMESTATE gameState) const noexcept;
-    void printFile(std::string name, int milliseconds) const noexcept;
+    void printFile(std::string name, int milliseconds);
 };
 
 #endif // _CONSOLE_HPP_

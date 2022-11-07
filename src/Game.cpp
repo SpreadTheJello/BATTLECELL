@@ -2,6 +2,9 @@
 #include "Player.hpp"
 
 #include <cmath>
+#include <time.h>
+
+using namespace	std;
 
 Game::Game() {
 	m_logger = new Console();
@@ -83,36 +86,57 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 				std::getline(std::cin, role);
 				if (role == "adventurer"){
 					m_player = new Player(name, p_Classes::ADVENTURER);
+					m_logger->printFile("adventurer", 50);
+					m_logger->WriteLine("\n\nYou are an adventurer!");
 				}
 				else if (role == "rogue"){
 					m_player = new Player(name, p_Classes::ROGUE);
+					m_logger->printFile("rogue", 50);
+					m_logger->WriteLine("\n\nYou are a rogue!");
 				}
 				else if (role == "ranger"){
 					m_player = new Player(name, p_Classes::RANGER);
+					m_logger->printFile("ranger", 50);
+					m_logger->WriteLine("\n\nYou are a ranger!");
 				}
 				else if (role == "paladin"){
 					m_player = new Player(name, p_Classes::PALADIN);
+					m_logger->printFile("paladin", 50);
+					m_logger->WriteLine("\n\nYou are a paladin!");
 				}
 				else if (role == "champion"){
 					m_player = new Player(name, p_Classes::CHAMPION);
+					m_logger->printFile("champion", 50);
+					m_logger->WriteLine("\n\nYou are a champion!");
 				}
 				else if (role == "random"){
+					srand(time(NULL));
 					int random = rand() % 5;
 					switch (random){
 						case 0:
 							m_player = new Player(name, p_Classes::ADVENTURER);
+							m_logger->printFile("adventurer", 50);
+							m_logger->WriteLine("\n\nYou are an adventurer!");
 							break;
 						case 1:
 							m_player = new Player(name, p_Classes::ROGUE);
+							m_logger->printFile("rogue", 50);
+							m_logger->WriteLine("\n\nYou are a rogue!");
 							break;
 						case 2:
 							m_player = new Player(name, p_Classes::RANGER);
+							m_logger->printFile("ranger", 50);
+							m_logger->WriteLine("\n\nYou are a ranger!");
 							break;
 						case 3:
 							m_player = new Player(name, p_Classes::PALADIN);
+							m_logger->printFile("paladin", 50);
+							m_logger->WriteLine("\n\nYou are a paladin!");
 							break;
 						case 4:
 							m_player = new Player(name, p_Classes::CHAMPION);
+							m_logger->printFile("champion", 50);
+							m_logger->WriteLine("\n\nYou are a champion!");
 							break;
 					}
 				}
@@ -129,6 +153,9 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 		case GAMESTATE::GAME:
 			if (command == "new") {
 				m_logger->WriteLine("You are already in the game!");
+			}
+			if (command == "status"){
+				m_logger->WriteLine(to_string(m_player->CurrentHealth()));
 			}
 			break;
 		default:

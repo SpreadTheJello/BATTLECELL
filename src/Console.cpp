@@ -68,7 +68,7 @@ void Console::WriteHelp(GAMESTATE gameState) const noexcept {
 }
 
 // loop through file and print each line with a delay
-void Console::printFile(string name, int milliseconds) const noexcept {
+void Console::printFile(string name, int milliseconds) {
     ifstream file("../ascii/" + name + ".txt");
     string line;
     while(getline(file, line)) {

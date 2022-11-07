@@ -14,6 +14,7 @@ Player::Player(string name, p_Classes option) {
                this->armor = 5;
                this->dodge = 0;
                this->sustain = 20;
+               break;
           case p_Classes::PALADIN:
                this->maxHP = 30; 
                this->currentHP = 30;
@@ -21,6 +22,7 @@ Player::Player(string name, p_Classes option) {
                this->armor = 10;
                this->dodge = 0;
                this->sustain = 30;
+               break;
           case p_Classes::RANGER:
                this->maxHP = 20; 
                this->currentHP = 20;
@@ -28,6 +30,7 @@ Player::Player(string name, p_Classes option) {
                this->armor = 5; 
                this->dodge = 30;
                this->sustain = 20;
+               break;
           case p_Classes::ROGUE:
                this->maxHP = 20;
                this->currentHP = 20;
@@ -35,13 +38,15 @@ Player::Player(string name, p_Classes option) {
                this->armor = 0; 
                this->dodge = 40;
                this->sustain = 15;
-          default: // ADVENTURER
-               this->maxHP = 30; //TBD
+               break;
+          case p_Classes::ADVENTURER:
+               this->maxHP = 30;
                this->currentHP = 30;
                this->damage = 8;
-               this->armor = 10; //TBD
+               this->armor = 10;
                this->dodge = 15;
                this->sustain = 20;
+               break;
      }
 
      gold = 5;
