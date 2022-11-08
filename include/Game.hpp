@@ -4,6 +4,7 @@
 #include "Console.hpp"
 #include "Creature.hpp"
 #include "Player.hpp"
+#include "Floor.hpp"
 
 
 
@@ -11,6 +12,8 @@ class Game {
     private:
         Console* m_logger = nullptr;
         Player* m_player = nullptr;
+
+        Floor* m_floor = nullptr;
 
         GAMESTATE m_gameState = GAMESTATE::MENU;
 

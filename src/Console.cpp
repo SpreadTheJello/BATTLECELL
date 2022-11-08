@@ -48,19 +48,29 @@ void Console::WriteHelp(GAMESTATE gameState) const noexcept {
     switch(gameState){
         case GAMESTATE::MENU:
             WriteLine("  {new} - Start a new game.");
-            WriteLine("  {exit} - Exit the game.");
             break;
     
         case GAMESTATE::GAME:
-            WriteLine("  {help} - Display this help message.");
-            WriteLine("  {exit} - Exit the game.");
-            WriteLine("  {loot} - Loot available items in room.");
-            WriteLine("  {go} - Move to a different room.");
-            WriteLine("  {inventory} - Display your inventory.");
-            WriteLine("  {equip} - Equip an item from your inventory.");
-            WriteLine("  {unequip} - Unequip an item from your inventory.");
-            WriteLine("  {stats} - Display your stats.");
+            WriteLine("  {status} - Display your stats.");
+            WriteLine("  {start} - Start your descent into the dungeon.");
+            
+        case GAMESTATE::FLOOR:
+            WriteLine("  {display} - View the current floor.");
+            WriteLine("  {go} {north}{east}{south}{west} - Move to a different room.");
+            WriteLine("  {status} - Display your and (if applicable) enemy's stats.");
+        
+        case GAMESTATE::COMBAT:
             WriteLine("  {attack} - Attack a monster in the room.");
+            WriteLine("  {status} - Display your and (if applicable) enemy's stats.");
+            WriteLine("  {run} - Attempt to run away from the monster.");
+            break;
+
+        case GAMESTATE::SHOP:
+            WriteLine("  {view} - See what the shopkeeper is selling.");
+            WriteLine("  {buy} {stat} - Purchase a stat improvement from the shop.");
+            WriteLine("  {status} - Display your stats.");
+            break;
+
         default:
             break;
     }

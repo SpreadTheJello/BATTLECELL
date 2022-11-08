@@ -1,5 +1,9 @@
 //initiate Player Class
 #include "Player.hpp"
+
+#include <thread>
+#include <chrono>
+
 using namespace std;
 
 unsigned int static const statGoldCost = 2;
@@ -192,19 +196,28 @@ unsigned int Player::getBaseDamage() const{
 // Prints player stats. For {status} outside of combat.
 void Player::printStats() {
      m_logger->WriteLine("Your stats:");
+     this_thread::sleep_for(chrono::milliseconds(400));
      m_logger->WriteLine("Health: " + this->healthBar() + "  (" + to_string(this->currentHP) + "/" + to_string(this->maxHP) + ") --- max. " + to_string(this->maxHealthStat));
+     this_thread::sleep_for(chrono::milliseconds(50));
      m_logger->WriteLine("Damage: " + to_string(this->damage) + " --- max. " + to_string(this->maxDamage));
+     this_thread::sleep_for(chrono::milliseconds(50));
      m_logger->WriteLine("Armor: " + to_string(this->armor) + " --- max. " + to_string(this->maxArmor));
+     this_thread::sleep_for(chrono::milliseconds(50));
      m_logger->WriteLine("Dodge: " + to_string(this->dodge) + "% --- max. " + to_string(this->maxDodge) + "%");
+     this_thread::sleep_for(chrono::milliseconds(50));
      m_logger->WriteLine("Sustain: " + to_string(this->sustain) + "% --- max. " + to_string(this->maxSustain) + "%");
 }
 
 // Player combat status. Overrides Creature::combatStatus
 void Player::combatStatus() {
      m_logger->WriteLine("Your status:");
+     this_thread::sleep_for(chrono::milliseconds(400));
      m_logger->WriteLine("Health: " + this->healthBar() + "  (" + to_string(this->currentHP) + "/" + to_string(this->maxHP) + ")");
+     this_thread::sleep_for(chrono::milliseconds(50));
      m_logger->WriteLine("Damage: " + to_string(this->damage));
+     this_thread::sleep_for(chrono::milliseconds(50));
      m_logger->WriteLine("Armor: " + to_string(this->armor));
+     this_thread::sleep_for(chrono::milliseconds(50));
      m_logger->WriteLine("Dodge: " + to_string(this->dodge) + "%");
 }
 

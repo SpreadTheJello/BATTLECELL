@@ -3,6 +3,8 @@
 #include <string>
 #include <random>
 #include <time.h>
+#include <thread>
+#include <chrono>
 #include "Creature.hpp"
 
 using namespace std;
@@ -148,9 +150,13 @@ string Creature::healthBar() {
 // Displays the stats of given creature.
 void Creature::combatStatus() {
     m_logger->WriteLine(this->name + "'s status:");
+    this_thread::sleep_for(chrono::milliseconds(400));
     m_logger->WriteLine("Health: " + this->healthBar() + "  (" + to_string(this->currentHP) + "/" + to_string(this->maxHP) + ")");
+    this_thread::sleep_for(chrono::milliseconds(50));
     m_logger->WriteLine("Damage: " + to_string(this->damage));
+    this_thread::sleep_for(chrono::milliseconds(50));
     m_logger->WriteLine("Armor: " + to_string(this->armor));
+    this_thread::sleep_for(chrono::milliseconds(50));
     m_logger->WriteLine("Dodge: " + to_string(this->dodge));
 }
 

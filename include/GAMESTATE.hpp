@@ -5,7 +5,10 @@ enum class GAMESTATE
 {
     TITLE,
     MENU,
-    GAME
+    GAME,
+    FLOOR,
+    COMBAT,
+    SHOP
 };
 
 #endif // _GAME_STATE_HPP

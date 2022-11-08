@@ -1,5 +1,7 @@
 #include "Game.hpp"
 #include "Player.hpp"
+#include "Floor.hpp"
+#include "FloorList.cpp"
 
 #include <cmath>
 #include <time.h>
@@ -59,8 +61,7 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 
 	// help
 	else if (command == "help"){
-		m_logger->WriteLine("Fuck you no help");
-		return true;
+		m_logger->WriteHelp(m_gameState);
 	}
 
 
@@ -68,7 +69,6 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 	switch (m_gameState) {
 		case GAMESTATE::TITLE:
 			m_gameState = GAMESTATE::MENU;
-			m_logger->WriteHelp(m_gameState);
 			break;
 			
 		case GAMESTATE::MENU:
@@ -79,6 +79,7 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 				m_logger->Write("\n> ");
 				std::string name;
 				std::getline(std::cin, name);
+				m_logger->WriteLine("Hello, " + name + "!");
 				m_logger->WriteLine("Please chose your player role: {adventurer}, {rogue}, {ranger}, {paladin}, or {champion}");
 				m_logger->WriteLine("You can also choose a {random} role!");
 				m_logger->Write("\n> ");
@@ -154,8 +155,89 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 			if (command == "new") {
 				m_logger->WriteLine("You are already in the game!");
 			}
-			if (command == "status"){
+			else if (command == "status"){
 				m_player->printStats();
+			}
+			else if (command == "start"){
+				transitionState = GAMESTATE::FLOOR;
+				m_floor = new Floor();
+				m_logger->WriteLine("You adventure into the dungeon!");
+			}
+			else{
+				m_logger->WriteCommandNotFound(command);
+				return true;
+			}
+			break;
+
+		case GAMESTATE::FLOOR:
+			if (command == "new") {
+				m_logger->WriteLine("You are already in the game!");
+			}
+			else if (command == "status"){
+				m_player->printStats();
+			}
+			else if(command == "display"){
+				//m_logger->WriteLine("You are in room " + std::to_string(m_floor->getRoom())); // TODO
+			}
+			else if(command == "go"){
+				if(mainArg == "north"){
+					// go north
+				}
+				else if(mainArg == "east"){
+					// go east
+				}
+				else if(mainArg == "south"){
+					// go south
+				}
+				else if(mainArg == "west"){
+					// go west
+				}
+				else{
+					m_logger->WriteLine("Invalid direction! Please try again.");
+					return true;
+				}
+			}
+			else{
+				m_logger->WriteCommandNotFound(command);
+				return true;
+			}
+			break;
+		
+		case GAMESTATE::COMBAT:
+			if (command == "new") {
+				m_logger->WriteLine("You are already in the game!");
+			}
+			else if (command == "status"){
+				m_player->combatStatus();
+			}
+			else if(command == "attack"){
+				// attack
+			}
+			else if(command == "run"){
+				// run
+			}
+			else{
+				m_logger->WriteCommandNotFound(command);
+				return true;
+			}
+			break;
+
+		case GAMESTATE::SHOP:
+			if (command == "new") {
+				m_logger->WriteLine("You are already in the game!");
+			}
+			else if (command == "status"){
+				m_player->printStats();
+			}
+			else if(command == "view"){
+				// view stats in shop
+			}
+			else if(command == "buy"){
+				// buy
+			}
+			else{
+				m_logger->WriteCommandNotFound(command);
+				return true;
 			}
 			break;
 		default:
