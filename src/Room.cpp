@@ -57,6 +57,31 @@ void Room::printNearby() {
     cout << "Nearby: {N " << this->nearbyRooms[0] << "; E "<< this->nearbyRooms[1] << "; S "<< this->nearbyRooms[2] << "; W "<< this->nearbyRooms[3] << " }" << endl;
 }
 
+void Room::printRoomType() {
+    if (this->roomType == r_Type::EMPTY) {
+        cout << "You have entered an empty room." << endl;
+    }
+    else if (this->roomType == r_Type::MONSTER) {
+        //cout << "You have entered a room with a " << this->enemy->getName() << " in it!" << endl;
+        cout << "You have entered a monster room" << endl;
+    }
+    else if (this->roomType == r_Type::SIDEBOSS) {
+        cout << "You have entered a sideboss in it." << endl;
+    }
+    //can change these to seem more dramatic
+    else if (this->roomType == r_Type::FLOORBOSS) {
+        cout << "You have entered a room with a floorboss." << endl;
+    }
+    else if (this->roomType == r_Type::SHOP) {
+        cout << "You have entered a shop." << endl;
+    }
+    else if (this->roomType == r_Type::REST) {
+        cout << "You have entered a rest room." << endl;
+    }
+    else if (this->roomType == r_Type::CLEARED) {
+        cout << "You have already cleared this room." << endl;
+    }
+}
 // Returns roomType
 r_Type Room::getType() {
     return this->roomType;

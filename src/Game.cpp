@@ -184,10 +184,12 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 				//m_logger->WriteLine("You are in room " + std::to_string(m_floor->getRoom())); // TODO
 			}
 			else if(command == "go"){
+				//for direction of travel
 				if(mainArg == "north"){
 					if(m_floor->traverse(0)){
 						m_logger->WriteLine("You go north.");
 						m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+						m_floor->getRoom(m_floor->getCurrentRoom())->printRoomType();
 					}
 					else{
 						m_logger->WriteLine("You can't go north.");
@@ -197,6 +199,7 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 					if(m_floor->traverse(1)){
 						m_logger->WriteLine("You go east.");
 						m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+						m_floor->getRoom(m_floor->getCurrentRoom())->printRoomType();
 					}
 					else{
 						m_logger->WriteLine("You can't go east.");
@@ -206,6 +209,7 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 					if(m_floor->traverse(2)){
 						m_logger->WriteLine("You go south.");
 						m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+						m_floor->getRoom(m_floor->getCurrentRoom())->printRoomType();
 					}
 					else{
 						m_logger->WriteLine("You can't go south.");
@@ -215,6 +219,7 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 					if(m_floor->traverse(3)){
 						m_logger->WriteLine("You go west.");
 						m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+						m_floor->getRoom(m_floor->getCurrentRoom())->printRoomType();
 					}
 					else{
 						m_logger->WriteLine("You can't go west.");

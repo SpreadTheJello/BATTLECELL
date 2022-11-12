@@ -1,5 +1,7 @@
 #include "Floor.hpp"
 
+using namespace std;
+
 Floor::Floor() {
     Room* rootRoom = new Room();
     this->rooms.push_back(rootRoom);

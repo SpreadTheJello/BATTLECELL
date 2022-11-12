@@ -33,6 +33,8 @@ class Room {
 
     void printNearby();
 
+    void printRoomType();
+
     r_Type getType();
     bool setType(r_Type type); // returns false if room already has a type
 
