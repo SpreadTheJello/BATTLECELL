@@ -10,25 +10,28 @@ using namespace std;
 // Default Constructor
 Room::Room() {
     this->roomType = r_Type::EMPTY;
-    this->nearbyRooms = new Room*[4];
+    this->nearbyRooms = new int[4];
     this->visited = false;
     
-    nearbyRooms[0] = nullptr; // North Room
-    nearbyRooms[1] = nullptr; // East Room
-    nearbyRooms[2] = nullptr; // South Room
-    nearbyRooms[3] = nullptr; // West Room
+    nearbyRooms[0] = -1; // North Room
+    nearbyRooms[1] = -1; // East Room
+    nearbyRooms[2] = -1; // South Room
+    nearbyRooms[3] = -1; // West Room
 }
 
 // New Room Constructor.
-Room::Room(r_Type type, Creature* enemy) {
+Room::Room(r_Type type, Creature* creature) {
     this->roomType = type;
-    this->nearbyRooms = new Room*[4];
+    this->nearbyRooms = new int[4];
     this->visited = false;
+    if (enemy != nullptr) {
+        this->enemy = creature;
+    }
     
-    nearbyRooms[0] = nullptr; // North Room
-    nearbyRooms[1] = nullptr; // East Room
-    nearbyRooms[2] = nullptr; // South Room
-    nearbyRooms[3] = nullptr; // West Room
+    nearbyRooms[0] = -1; // North Room
+    nearbyRooms[1] = -1; // East Room
+    nearbyRooms[2] = -1; // South Room
+    nearbyRooms[3] = -1; // West Room
 }
 
 // Copy Room Constructor.
@@ -46,9 +49,13 @@ Room::~Room() {
 }
 
 
-
 /* Room Functions */
 
+// m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+// Prints nearby rooms.
+void Room::printNearby() {
+    cout << "Nearby: {N " << this->nearbyRooms[0] << "; E "<< this->nearbyRooms[1] << "; S "<< this->nearbyRooms[2] << "; W "<< this->nearbyRooms[3] << " }" << endl;
+}
 
 // Returns roomType
 r_Type Room::getType() {
@@ -89,27 +96,27 @@ bool Room::setEnemy(Creature* creature) {
 /* Nearby Room Getters */
 
 // Returns nearby rooms. (North, East, South, West)
-Room** Room::getNearbyRooms() const{
+int* Room::getNearbyRooms() const{
     return this->nearbyRooms;
 }
 
 // Returns Northern room.
-Room* Room::getNorthRoom() const{
+int Room::getNorthRoom() const{
     return this->nearbyRooms[0];
 }
 
 // Returns Eastern room.
-Room* Room::getEastRoom() const{
+int Room::getEastRoom() const{
     return this->nearbyRooms[1];
 }
 
 // Returns Southern room.
-Room* Room::getSouthRoom() const{
+int Room::getSouthRoom() const{
     return this->nearbyRooms[2];
 }
 
 // Returns Western room.
-Room* Room::getWestRoom() const{
+int Room::getWestRoom() const{
     return this->nearbyRooms[3];
 }
 
@@ -119,8 +126,8 @@ Room* Room::getWestRoom() const{
 
 
 // Attempts to set Northern room. Returns false if there is already a Northern room.
-bool Room::setNorthRoom(Room* room) {
-    if (this->nearbyRooms[0] == nullptr) {
+bool Room::setNorthRoom(int room) {
+    if (this->nearbyRooms[0] == -1) {
         this->nearbyRooms[0] = room;
         return true;
     }
@@ -128,8 +135,8 @@ bool Room::setNorthRoom(Room* room) {
 }
 
 // Attempts to set Eastern room. Returns false if there is already a Northern room.
-bool Room::setEastRoom(Room* room) {
-    if (this->nearbyRooms[1] == nullptr) {
+bool Room::setEastRoom(int room) {
+    if (this->nearbyRooms[1] == -1) {
         this->nearbyRooms[1] = room;
         return true;
     }
@@ -137,8 +144,8 @@ bool Room::setEastRoom(Room* room) {
 }
 
 // Attempts to set Southern room. Returns false if there is already a Northern room.
-bool Room::setSouthRoom(Room* room) {
-    if (this->nearbyRooms[2] == nullptr) {
+bool Room::setSouthRoom(int room) {
+    if (this->nearbyRooms[2] == -1) {
         this->nearbyRooms[2] = room;
         return true;
     }
@@ -146,8 +153,8 @@ bool Room::setSouthRoom(Room* room) {
 }
 
 // Attempts to set Western room. Returns false if there is already a Northern room.
-bool Room::setWestRoom(Room* room) {
-    if (this->nearbyRooms[3] == nullptr) {
+bool Room::setWestRoom(int room) {
+    if (this->nearbyRooms[3] == -1) {
         this->nearbyRooms[3] = room;
         return true;
     }

@@ -53,11 +53,13 @@ void Console::WriteHelp(GAMESTATE gameState) const noexcept {
         case GAMESTATE::GAME:
             WriteLine("  {status} - Display your stats.");
             WriteLine("  {start} - Start your descent into the dungeon.");
+            break;
             
         case GAMESTATE::FLOOR:
             WriteLine("  {display} - View the current floor.");
             WriteLine("  {go} {north}{east}{south}{west} - Move to a different room.");
             WriteLine("  {status} - Display your and (if applicable) enemy's stats.");
+            break;
         
         case GAMESTATE::COMBAT:
             WriteLine("  {attack} - Attack a monster in the room.");

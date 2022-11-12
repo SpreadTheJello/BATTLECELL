@@ -28,6 +28,10 @@ void Game::TransitionState(GAMESTATE state) {
 			m_gameState = GAMESTATE::GAME;
 			m_logger->Write("You are in the game!");
 			break;
+		case GAMESTATE::FLOOR:
+			m_gameState = GAMESTATE::FLOOR;
+			m_logger->WriteLine("You adventure into the dungeon!");
+			break;
 		default:
 			break;
 	}
@@ -37,7 +41,7 @@ void Game::TransitionState(GAMESTATE state) {
 bool Game::ProcessCommand(std::string command, std::string mainArg, std::string fullArg) {
 	// quit
 	if (command == "exit" || command == "quit") {
-		if(m_gameState == GAMESTATE::GAME) {
+		if(m_gameState == GAMESTATE::GAME || m_gameState == GAMESTATE::FLOOR) {
 			m_logger->WriteLine("Are you sure you want to quit, " + m_player->getName() + "? (y/n)");
 			std::string input;
 			std::getline(std::cin, input);
@@ -160,8 +164,8 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 			}
 			else if (command == "start"){
 				transitionState = GAMESTATE::FLOOR;
-				m_floor = new Floor();
-				m_logger->WriteLine("You adventure into the dungeon!");
+				m_floor = new FirstFloor();
+				m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
 			}
 			else{
 				m_logger->WriteCommandNotFound(command);
@@ -181,20 +185,43 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 			}
 			else if(command == "go"){
 				if(mainArg == "north"){
-					// go north
+					if(m_floor->traverse(0)){
+						m_logger->WriteLine("You go north.");
+						m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+					}
+					else{
+						m_logger->WriteLine("You can't go north.");
+					}
 				}
 				else if(mainArg == "east"){
-					// go east
+					if(m_floor->traverse(1)){
+						m_logger->WriteLine("You go east.");
+						m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+					}
+					else{
+						m_logger->WriteLine("You can't go east.");
+					}
 				}
 				else if(mainArg == "south"){
-					// go south
+					if(m_floor->traverse(2)){
+						m_logger->WriteLine("You go south.");
+						m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+					}
+					else{
+						m_logger->WriteLine("You can't go south.");
+					}
 				}
 				else if(mainArg == "west"){
-					// go west
+					if(m_floor->traverse(3)){
+						m_logger->WriteLine("You go west.");
+						m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+					}
+					else{
+						m_logger->WriteLine("You can't go west.");
+					}
 				}
 				else{
 					m_logger->WriteLine("Invalid direction! Please try again.");
-					return true;
 				}
 			}
 			else{

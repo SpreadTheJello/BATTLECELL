@@ -13,10 +13,12 @@ enum r_Type {
     REST,
     CLEARED,
 };
-
+// Main Set (floor), 
+// Main set contains a list of ID's (rooms)
+// List of ID's contain directions (ID's to other rooms)
 class Room {
   protected:
-    Room** nearbyRooms = nullptr;
+    int* nearbyRooms = nullptr;
     r_Type roomType;
     bool visited;
 
@@ -24,10 +26,12 @@ class Room {
 
   public:
     Room();
-    Room(r_Type type, Creature* enemy = nullptr);
+    Room(r_Type type, Creature* creature = nullptr);
     Room(Room& rCopy);
 
     ~Room();
+
+    void printNearby();
 
     r_Type getType();
     bool setType(r_Type type); // returns false if room already has a type
@@ -40,16 +44,16 @@ class Room {
 
     bool isVisited() const;
 
-    Room** getNearbyRooms() const;
-    Room* getNorthRoom() const;
-    Room* getEastRoom() const;
-    Room* getSouthRoom() const;
-    Room* getWestRoom() const;
+    int* getNearbyRooms() const;
+    int getNorthRoom() const;
+    int getEastRoom() const;
+    int getSouthRoom() const;
+    int getWestRoom() const;
 
-    bool setNorthRoom(Room* room);
-    bool setEastRoom(Room* room);
-    bool setSouthRoom(Room* room);
-    bool setWestRoom(Room* room);
+    bool setNorthRoom(int room);
+    bool setEastRoom(int room);
+    bool setSouthRoom(int room);
+    bool setWestRoom(int room);
 };
 
 
