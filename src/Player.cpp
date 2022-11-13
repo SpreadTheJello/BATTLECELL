@@ -222,6 +222,13 @@ void Player::combatStatus() {
 }
 
 
+// Performs a rest action
+int Player::rest() {
+     this->Heal(floor(this->maxHP * this->sustain / 100));
+     return floor(this->maxHP * this->sustain / 100);
+}
+
+
 
 /* Improve Stat Functions */
 

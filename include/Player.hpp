@@ -58,6 +58,7 @@ class Player : public Creature {
     void printStats();
     void combatStatus();
 
+    int rest();
 
     bool ImproveSustain(int up);
     bool ImproveHP(int up);

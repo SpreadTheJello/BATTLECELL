@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Creature.hpp"
+#include "Console.hpp"
 
 enum r_Type {
     EMPTY,
@@ -13,9 +14,8 @@ enum r_Type {
     REST,
     CLEARED,
 };
-// Main Set (floor), 
-// Main set contains a list of ID's (rooms)
-// List of ID's contain directions (ID's to other rooms)
+
+
 class Room {
   protected:
     int* nearbyRooms = nullptr;
@@ -23,6 +23,8 @@ class Room {
     bool visited;
 
     Creature* enemy = nullptr;
+
+    Console* logger = nullptr;
 
   public:
     Room();
@@ -33,12 +35,11 @@ class Room {
 
     void printNearby();
 
-    void printRoomType();
-
     r_Type getType();
+    std::string getRoomString();
     bool setType(r_Type type); // returns false if room already has a type
 
-    Creature* getEnemy() const;
+    Creature* getEnemy();
     bool setEnemy(Creature* creature); // returns false if room already has an enemy
 
     void markVisited();

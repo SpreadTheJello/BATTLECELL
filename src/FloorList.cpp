@@ -5,16 +5,13 @@
 class FirstFloor : public Floor {
     public:
         FirstFloor() {
-            Creature* noMonster = nullptr;
-            Creature* Zombie = new Creature("Zombie", 5, 5, 5, 5);
-            Room* room1 = new Room(r_Type::MONSTER, Zombie);
+            Room* room1 = new Room(r_Type::MONSTER, new Zombie());
             this->addRoom(room1);
-
-            Room* room2 = new Room(r_Type::SHOP, noMonster);
+            Room* room2 = new Room(r_Type::SHOP);
             this->addRoom(room2);
-            Room* room3 = new Room(r_Type::REST, noMonster);
+            Room* room3 = new Room(r_Type::REST);
             this->addRoom(room3);
-            Room* room4 = new Room(r_Type::MONSTER, Zombie);
+            Room* room4 = new Room(r_Type::MONSTER, new Daemon());
             this->addRoom(room4);
             
             this->connectRooms(1, 0, 0);

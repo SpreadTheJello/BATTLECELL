@@ -8,7 +8,9 @@ enum class GAMESTATE
     GAME,
     FLOOR,
     COMBAT,
-    SHOP
+    SHOP,
+    DEV,
+    REST
 };
 
 #endif // _GAME_STATE_HPP

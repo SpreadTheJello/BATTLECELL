@@ -38,7 +38,7 @@ class Creature {
     bool DealDamage(int amount); // Calculates damage creature takes and reduces currentHealth accordingly. Return false if creature dies, true if still alive.
     void Heal(int amount); // Heals taken damage.
     
-    void combatAction(Creature& enemy);
+    virtual void combatAction(Creature* enemy);
     void combatStatus();
     
     std::string healthBar();

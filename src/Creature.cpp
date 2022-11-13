@@ -99,7 +99,7 @@ bool Creature::DealDamage(int amount) {
     int reduction = floor(2 * amount / 3);
     if (reduction > this->armor )
         reduction = this->armor;
-    if(this->currentHP - (amount-reduction) <= 0)
+    if( ((int) this->currentHP) - (amount-reduction) <= 0)
         currentHP = 0;
     else
         this->currentHP -= (amount-reduction);
@@ -115,17 +115,17 @@ void Creature::Heal(int amount) {
 }
 
 // Default Combat Action: attack an enemy
-void Creature::combatAction(Creature& enemy) {
-    m_logger->WriteLine(this->name + " attacks " + enemy.getName());
+void Creature::combatAction(Creature* enemy) {
+    m_logger->WriteLine(this->name + " attacks " + enemy->getName());
 
     //Dodge Check
     srand(time(NULL));
-    if(rand() % 100 < enemy.GetDodge()) { // Dodges
-        m_logger->WriteLine("A miss! " + enemy.getName() + " dodges " + this->name + "'s attack.");
+    if(rand() % 100 < enemy->GetDodge()) { // Dodges
+        m_logger->WriteLine("A miss! " + enemy->getName() + " dodges " + this->name + "'s attack.");
     }
     else { // Deals Damage
-        m_logger->WriteLine("A hit! " + this->name + " strikes " +  enemy.getName() + "!");
-        enemy.DealDamage(this->damage);
+        m_logger->WriteLine("A hit! " + this->name + " strikes " +  enemy->getName() + "!");
+        enemy->DealDamage(this->damage);
     }
 }
 
@@ -157,6 +157,6 @@ void Creature::combatStatus() {
     this_thread::sleep_for(chrono::milliseconds(50));
     m_logger->WriteLine("Armor: " + to_string(this->armor));
     this_thread::sleep_for(chrono::milliseconds(50));
-    m_logger->WriteLine("Dodge: " + to_string(this->dodge));
+    m_logger->WriteLine("Dodge: " + to_string(this->dodge) + "%");
 }
 

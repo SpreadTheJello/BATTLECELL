@@ -64,7 +64,8 @@ void Console::WriteHelp(GAMESTATE gameState) const noexcept {
         case GAMESTATE::COMBAT:
             WriteLine("  {attack} - Attack a monster in the room.");
             WriteLine("  {status} - Display your and (if applicable) enemy's stats.");
-            WriteLine("  {run} - Attempt to run away from the monster.");
+            WriteLine("  {flee} - Attempt to run away from the monster.");
+            WriteLine("  {display} - View the current floor.");
             break;
 
         case GAMESTATE::SHOP:

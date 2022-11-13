@@ -25,18 +25,18 @@ class Daemon : public Creature {
         this->name = "Daemon";
         this->maxHP = 42;
         this->currentHP = 42;
-        this->damage = 13;
+        this->damage = 10;
         this->dodge = 30;
         this->armor = 6;
     }
 
     // Two possible attacks, normal attack and an unmissable attack (at 1/2 damage).
-    void combatAction(Creature& enemy) {
+    void combatAction(Creature* enemy) {
         srand(time(NULL));
         if(rand() % 4 == 3) { // 25% chance of alt. attack
             m_logger->WriteLine(this->name + " attacks with a chaotic force!");
-            m_logger->WriteLine(enemy.getName() + " tries to avoid the attack, but it cannot miss!");
-            enemy.DealDamage( floor(this->damage / 2) );
+            m_logger->WriteLine(enemy->getName() + " tries to avoid the attack, but it cannot miss!");
+            enemy->DealDamage( floor(this->damage / 2) );
         } else {
           this->Creature::combatAction(enemy);
         }

@@ -17,6 +17,8 @@ Room::Room() {
     nearbyRooms[1] = -1; // East Room
     nearbyRooms[2] = -1; // South Room
     nearbyRooms[3] = -1; // West Room
+
+    logger = new Console();
 }
 
 // New Room Constructor.
@@ -24,7 +26,8 @@ Room::Room(r_Type type, Creature* creature) {
     this->roomType = type;
     this->nearbyRooms = new int[4];
     this->visited = false;
-    if (enemy != nullptr) {
+    
+    if (creature != nullptr) { 
         this->enemy = creature;
     }
     
@@ -32,6 +35,8 @@ Room::Room(r_Type type, Creature* creature) {
     nearbyRooms[1] = -1; // East Room
     nearbyRooms[2] = -1; // South Room
     nearbyRooms[3] = -1; // West Room
+
+    logger = new Console();
 }
 
 // Copy Room Constructor.
@@ -41,11 +46,15 @@ Room::Room(Room& rCopy) {
 
     this->visited = false;
     this->enemy = rCopy.getEnemy();
+    
+    logger = new Console();
 }
 
 // Destructor
 Room::~Room() {
     delete[] nearbyRooms;
+
+    delete logger;
 }
 
 
@@ -54,34 +63,63 @@ Room::~Room() {
 // m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
 // Prints nearby rooms.
 void Room::printNearby() {
-    cout << "Nearby: {N " << this->nearbyRooms[0] << "; E "<< this->nearbyRooms[1] << "; S "<< this->nearbyRooms[2] << "; W "<< this->nearbyRooms[3] << " }" << endl;
+    logger->WriteLine();
+    if(this->nearbyRooms[0] != -1){
+        logger->WriteLine("\t\tNorth\n");
+        logger->WriteLine("\t\t" + to_string(this->nearbyRooms[0]) + "\n");
+    }
+    else {
+        logger->WriteLine("\n\n\n");
+    }
+    if(this->nearbyRooms[3] != -1){
+        logger->Write("West\t" + to_string(this->nearbyRooms[3]) + "\t\t");
+    }
+    else {
+        logger->Write("\t\t\t");
+    }
+    if(this->nearbyRooms[1] != -1){
+        logger->WriteLine(to_string(nearbyRooms[1]) + "\tEast \n");
+    }
+    else {
+        logger->WriteLine("\n");
+    }
+    if(this->nearbyRooms[2] != -1){
+        logger->WriteLine("\t\t" + to_string(this->nearbyRooms[2]));
+        logger->WriteLine("\n\t\tSouth");
+    }
+    else {
+        logger->WriteLine("\n\n");
+    }
 }
 
-void Room::printRoomType() {
+// Get room type in string
+string Room::getRoomString() {
     if (this->roomType == r_Type::EMPTY) {
-        cout << "You have entered an empty room." << endl;
+        return "EMPTY";
     }
     else if (this->roomType == r_Type::MONSTER) {
-        //cout << "You have entered a room with a " << this->enemy->getName() << " in it!" << endl;
-        cout << "You have entered a monster room" << endl;
+        return "MONSTER";
     }
     else if (this->roomType == r_Type::SIDEBOSS) {
-        cout << "You have entered a sideboss in it." << endl;
+        return "SIDEBOSS";
     }
-    //can change these to seem more dramatic
     else if (this->roomType == r_Type::FLOORBOSS) {
-        cout << "You have entered a room with a floorboss." << endl;
+        return "FLOORBOSS";
     }
     else if (this->roomType == r_Type::SHOP) {
-        cout << "You have entered a shop." << endl;
+        return "SHOP";
     }
     else if (this->roomType == r_Type::REST) {
-        cout << "You have entered a rest room." << endl;
+        return "REST";
     }
     else if (this->roomType == r_Type::CLEARED) {
-        cout << "You have already cleared this room." << endl;
+        return "CLEARED";
+    }
+    else {
+        return "ERROR";
     }
 }
+
 // Returns roomType
 r_Type Room::getType() {
     return this->roomType;
@@ -103,7 +141,7 @@ bool Room::isVisited() const{
 }
 
 // Returns enemy in room.
-Creature* Room::getEnemy() const {
+Creature* Room::getEnemy() {
     return this->enemy;
 }
 
