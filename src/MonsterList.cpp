@@ -1,5 +1,7 @@
 #include <random>
 #include <time.h>
+#include <chrono>
+#include <thread>
 
 #include "Creature.hpp"
 
@@ -34,7 +36,9 @@ class Daemon : public Creature {
     void combatAction(Creature* enemy) {
         srand(time(NULL));
         if(rand() % 4 == 3) { // 25% chance of alt. attack
+            this_thread::sleep_for(chrono::milliseconds(400));
             m_logger->WriteLine(this->name + " attacks with a chaotic force!");
+            this_thread::sleep_for(chrono::milliseconds(400));
             m_logger->WriteLine(enemy->getName() + " tries to avoid the attack, but it cannot miss!");
             enemy->DealDamage( floor(this->damage / 2) );
         } else {

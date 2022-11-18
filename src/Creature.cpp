@@ -117,14 +117,17 @@ void Creature::Heal(int amount) {
 // Default Combat Action: attack an enemy
 void Creature::combatAction(Creature* enemy) {
     m_logger->WriteLine(this->name + " attacks " + enemy->getName());
+    this_thread::sleep_for(chrono::milliseconds(400));
 
     //Dodge Check
     srand(time(NULL));
     if(rand() % 100 < enemy->GetDodge()) { // Dodges
-        m_logger->WriteLine("A miss! " + enemy->getName() + " dodges " + this->name + "'s attack.");
+    this_thread::sleep_for(chrono::milliseconds(400));
+        m_logger->WriteLine("A miss! " + enemy->getName() + " dodges " + this->name + "'s attack.\n");
     }
     else { // Deals Damage
-        m_logger->WriteLine("A hit! " + this->name + " strikes " +  enemy->getName() + "!");
+    this_thread::sleep_for(chrono::milliseconds(400));
+        m_logger->WriteLine("A hit! " + this->name + " strikes " +  enemy->getName() + "!\n");
         enemy->DealDamage(this->damage);
     }
 }
