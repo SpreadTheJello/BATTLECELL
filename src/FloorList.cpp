@@ -5,9 +5,9 @@
 class FirstFloor : public Floor {
     public:
         FirstFloor() {
-            Room* room1 = new Room(r_Type::MONSTER, new Zombie());
+            Room* room1 = new Room(r_Type::SHOP);
             this->addRoom(room1);
-            Room* room2 = new Room(r_Type::SHOP);
+            Room* room2 = new Room(r_Type::MONSTER, new Zombie());
             this->addRoom(room2);
             Room* room3 = new Room(r_Type::REST);
             this->addRoom(room3);

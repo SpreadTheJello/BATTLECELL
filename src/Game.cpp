@@ -40,9 +40,29 @@ void Game::TransitionState(GAMESTATE state) {
 			m_gameState = GAMESTATE::REST;
 			m_logger->WriteLine("Would you like to rest? (y/n)");
 			break;
-		case GAMESTATE::DEV:
-			m_gameState = GAMESTATE::DEV;
-			m_logger->WriteLine("You enter devMode!");
+		case GAMESTATE::SHOP:
+			m_gameState = GAMESTATE::SHOP;
+			m_logger->printFile("shop", 50);
+			switch (rand() % 5) {
+				case 0:
+					m_logger->WriteLine("Welcome, stranger. You won't find a better merchant in these dungeons.");
+					break;
+				case 1:
+					m_logger->WriteLine("Lamp oil? Rope? Bombs? I don't have any of those, but I can make you stronger... For a small fee.");
+					break;
+				case 2:
+					m_logger->WriteLine("Shiba has wares, if you have coin.");
+					break;
+				case 3:
+					m_logger->WriteLine("Got some rare things on sale, stranger.");
+					break;
+				case 4:
+					m_logger->WriteLine("If I can't find you what you need, it can't be found in Battlecell.");
+					break;
+				default:
+					break;
+			}
+			m_logger->WriteLine("\nYou can {buy} improvements to any of your stats, such as <health/damage/dodge/armor/sustain>.");
 			break;
 		default:
 			break;
@@ -53,7 +73,7 @@ void Game::TransitionState(GAMESTATE state) {
 bool Game::ProcessCommand(std::string command, std::string mainArg, std::string fullArg) {
 	// quit
 	if (command == "exit" || command == "quit") {
-		if(m_gameState == GAMESTATE::GAME || m_gameState == GAMESTATE::FLOOR) {
+		if(!(m_gameState == GAMESTATE::MENU)) {
 			m_logger->WriteLine("Are you sure you want to quit, " + m_player->getName() + "? (y/n)");
 			std::string input;
 			std::getline(std::cin, input);
@@ -65,13 +85,9 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 				return true;
 			}
 		}
-		else if (m_gameState == GAMESTATE::MENU) {
-			m_logger->WriteLine("Game Over.");
-        	return false;
-		}
 		else {
-			m_logger->WriteCommandNotFound(command);
-			return true;
+			m_logger->WriteLine("Goodbye!\n");
+        	return false;
 		}
     }
 
@@ -219,6 +235,9 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 						if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "REST"){
 							transitionState = GAMESTATE::REST;
 						}
+						if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "SHOP"){
+							transitionState = GAMESTATE::SHOP;
+						}
 					}
 					else{
 						m_logger->WriteLine("You can't go north.");
@@ -234,6 +253,9 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 						}
 						if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "REST"){
 							transitionState = GAMESTATE::REST;
+						}
+						if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "SHOP"){
+							transitionState = GAMESTATE::SHOP;
 						}
 					}
 					else{
@@ -251,6 +273,9 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 						if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "REST"){
 							transitionState = GAMESTATE::REST;
 						}
+						if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "SHOP"){
+							transitionState = GAMESTATE::SHOP;
+						}
 					}
 					else{
 						m_logger->WriteLine("You can't go south.");
@@ -266,6 +291,9 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 						}
 						if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "REST"){
 							transitionState = GAMESTATE::REST;
+						}
+						if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "SHOP"){
+							transitionState = GAMESTATE::SHOP;
 						}
 					}
 					else{
@@ -349,10 +377,49 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 				m_player->printStats();
 			}
 			else if(command == "view"){
-				// view stats in shop
+				m_logger->WriteLine("\nYou can {buy} improvements to any of your stats, such as <health/damage/dodge/armor/sustain>.");
 			}
 			else if(command == "buy"){
-				// buy
+				if (mainArg == "health") {
+					m_player->BuyHealth();
+				}
+				else if (mainArg == "damage") {
+					m_player->BuyDamage();
+				}
+				else if (mainArg == "sustain") {
+					m_player->BuySustain();
+				}
+				else if (mainArg == "dodge") {
+					m_player->BuyDodge();
+				}
+				else if (mainArg == "armor") {
+					m_player->BuyArmor();
+				}
+				else {
+					m_logger->WriteLine("\nI don't have that! Is there something else you're looking for? \n");
+				}
+			}
+			else if (command == "leave") {
+				switch (rand() % 5) {
+					case 0:
+						m_logger->WriteLine("Farewell, stranger.");
+						break;
+					case 1:
+						m_logger->WriteLine("Remember me when you have some more coin to burn!");
+						break;
+					case 2:
+						m_logger->WriteLine("Pleasure doing business with you!");
+						break;
+					case 3:
+						m_logger->WriteLine("Good luck, stranger.");
+						break;
+					case 4:
+						m_logger->WriteLine("Then be on your way, friend.");
+						break;
+					default:
+						break;
+				}
+				transitionState = GAMESTATE::FLOOR;
 			}
 			else{
 				m_logger->WriteCommandNotFound(command);
@@ -374,8 +441,6 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 			else{
 				m_logger->WriteLine("Invalid input. Please try again.");
 			}
-
-
 			break;
 			
 		default:

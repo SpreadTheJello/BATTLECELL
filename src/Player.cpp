@@ -7,7 +7,7 @@
 
 using namespace std;
 
-unsigned int static const statGoldCost = 2;
+unsigned int static const statGoldCost = 3;
 
 // Player Constructor
 Player::Player(string name, p_Classes option) {
@@ -207,6 +207,8 @@ void Player::printStats() {
      m_logger->WriteLine("Dodge: " + to_string(this->dodge) + "% --- max. " + to_string(this->maxDodge) + "%");
      this_thread::sleep_for(chrono::milliseconds(50));
      m_logger->WriteLine("Sustain: " + to_string(this->sustain) + "% --- max. " + to_string(this->maxSustain) + "%");
+     this_thread::sleep_for(chrono::milliseconds(50));
+     m_logger->WriteLine("\nGold: " + to_string(this->gold));
 }
 
 // Player combat status. Overrides Creature::combatStatus
@@ -258,11 +260,13 @@ bool Player::ImproveHP(int up) {
           return false;
      }
      else if (this->maxHP + up > this->maxHealthStat){
-          this->maxHP =this-> maxHealthStat;
+          this->maxHP = this->maxHealthStat;
+          this->Heal(up);
           m_logger->WriteLine("Improved Max HP to maximum.");
      }
      else{
           this->maxHP += up;
+          this->Heal(up);
           m_logger->WriteLine("Improved Max HP by " + to_string(up) + ".");
      }
      return true;
@@ -334,7 +338,7 @@ bool Player::BuyHealth() {
           ImproveHP(improvement);
           return true;
      }
-     m_logger->WriteLine("Cannot afford improvement.");
+     m_logger->WriteLine("You cannot afford this improvement.");
      return false;
 }
 
@@ -348,7 +352,7 @@ bool Player::BuyArmor() {
           ImproveArmor(improvement);
           return true;
      }
-     m_logger->WriteLine("Cannot afford improvement.");
+     m_logger->WriteLine("You cannot afford this improvement.");
      return false;
 }
 
@@ -362,7 +366,7 @@ bool Player::BuyDamage() {
           ImproveDamage(improvement);
           return true;
      }
-     m_logger->WriteLine("Cannot afford improvement.");
+     m_logger->WriteLine("You cannot afford this improvement.");
      return false;
 }
 
@@ -376,7 +380,7 @@ bool Player::BuyDodge() {
           ImproveHP(improvement);
           return true;
      }
-     m_logger->WriteLine("Cannot afford improvement.");
+     m_logger->WriteLine("You cannot afford this improvement.");
      return false;
 }
 
@@ -390,7 +394,7 @@ bool Player::BuySustain() {
           ImproveHP(improvement);
           return true;
      }
-     m_logger->WriteLine("Cannot afford improvement.");
+     m_logger->WriteLine("You cannot afford this improvement.");
      return false;
 }
 

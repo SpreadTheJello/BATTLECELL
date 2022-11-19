@@ -71,6 +71,7 @@ void Console::WriteHelp(GAMESTATE gameState) const noexcept {
         case GAMESTATE::SHOP:
             WriteLine("  {view} - See what the shopkeeper is selling.");
             WriteLine("  {buy} {stat} - Purchase a stat improvement from the shop.");
+            WriteLine("  {leave} - leave the shop");
             WriteLine("  {status} - Display your stats.");
             break;
 

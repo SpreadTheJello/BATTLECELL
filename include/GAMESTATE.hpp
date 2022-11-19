@@ -9,7 +9,6 @@ enum class GAMESTATE
     FLOOR,
     COMBAT,
     SHOP,
-    DEV,
     REST
 };
 
