@@ -67,7 +67,7 @@ Player::Player(string name, p_Classes option) {
 
                this->maxDamage = 16;
                this->baseDamage = 6;
-               this->damage = 16;
+               this->damage = 6;
 
                this->maxArmor = 40;
                this->baseArmor = 10;
@@ -88,7 +88,7 @@ Player::Player(string name, p_Classes option) {
                this->currentHP = 30;
 
                this->maxDamage = 28;
-               this->baseDamage = 80;
+               this->baseDamage = 8;
                this->damage = 8;
 
                this->maxArmor = 15;
@@ -323,6 +323,29 @@ bool Player::ImproveArmor(int up) {
      return true;
 }
 
+// Improves all stats by one "stage"
+void Player::MassImprovement() {
+     unsigned int improvement;
+     // Improve HP
+     improvement = (this->maxHealthStat - this->baseHealthStat) / 10;
+     ImproveHP(improvement);
+
+     // Improve Damage
+     improvement = (this->maxDamage - this->baseDamage) / 10;
+     ImproveDamage(improvement);
+
+     // Improve Dodge
+     improvement = (this->maxDodge - this->baseDodge) / 10;
+     ImproveDodge(improvement);
+
+     // Improve Armor
+     improvement = (this->maxArmor - this->baseArmor) / 10;
+     ImproveArmor(improvement);
+
+     // Improve Sustain
+     improvement = (this->maxSustain - this->baseSustain) / 10;
+     ImproveSustain(improvement);
+}
 
 
 /* Buy Stat Improvement functions */

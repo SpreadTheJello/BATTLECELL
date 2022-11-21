@@ -24,7 +24,8 @@ int main(int argc, char ** args)
     Game * game = new Game();
     string lineIn;
     
-    console->Write("\n\n\n\n\n\n\n\n\n");
+    system("clear");
+    console->WriteLine("\n\n\n\n\n\n");
     console->printFile("title", 200);
     console->WriteLine("\t\t\t\tWelcome to Battlecell!\n");
     console->WriteLine("Menu: From here, you can start a {new} game, or {exit}! At any time, {help} will tell you the available commands.");

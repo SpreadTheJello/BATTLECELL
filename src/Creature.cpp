@@ -116,8 +116,8 @@ void Creature::Heal(int amount) {
 
 // Default Combat Action: attack an enemy
 void Creature::combatAction(Creature* enemy) {
-    m_logger->WriteLine(this->name + " attacks " + enemy->getName());
     this_thread::sleep_for(chrono::milliseconds(400));
+    m_logger->WriteLine(this->name + " attacks " + enemy->getName());
 
     //Dodge Check
     srand(time(NULL));
@@ -135,7 +135,7 @@ void Creature::combatAction(Creature* enemy) {
 // returns Health Bar string
 string Creature::healthBar() {
     string hBar = "[";
-    int hIncrement = floor(this->maxHP / 16);
+    int hIncrement = ceil(this->maxHP / 16);
     int hpCounter = this->currentHP;
     while (hpCounter > 0) {
         hBar += "▒";

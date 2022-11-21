@@ -66,6 +66,7 @@ class Player : public Creature {
     bool ImproveDamage(int up);
     bool ImproveArmor(int up);
 
+    void MassImprovement();
 
     bool BuyHealth();
     bool BuyDamage();

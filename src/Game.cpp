@@ -43,6 +43,7 @@ void Game::TransitionState(GAMESTATE state) {
 		case GAMESTATE::SHOP:
 			m_gameState = GAMESTATE::SHOP;
 			m_logger->printFile("shop", 50);
+			srand(time(NULL));
 			switch (rand() % 5) {
 				case 0:
 					m_logger->WriteLine("Welcome, stranger. You won't find a better merchant in these dungeons.");
@@ -109,7 +110,9 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 					m_player = new Player("Dev", p_Classes::ADVENTURER);
 					transitionState = GAMESTATE::FLOOR;
 					m_floor = new FirstFloor();
-					m_floor->getRoom(m_floor->getCurrentRoom())->printNearby();
+					for(int i = 0;  i < m_floor->floorSize(); i++) {
+						m_logger->WriteLine(to_string(i) + " { N:" + to_string(m_floor->getRoom(i)->getNorthRoom()) + "; E:"+ to_string(m_floor->getRoom(i)->getEastRoom()) + "; S:"+ to_string(m_floor->getRoom(i)->getSouthRoom()) + "; W:"+ to_string(m_floor->getRoom(i)->getWestRoom()) + " }");
+					}
 				}
 				else{
 					transitionState = GAMESTATE::GAME;
@@ -330,11 +333,30 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 					if(!m_player->isAlive()) {
 						m_logger->printFile("gameover", 150);
 						transitionState = GAMESTATE::MENU;
-						// transitionState = GAMESTATE::GAMEOVER;
 					}
 				}
-				else{
+				
+				if (!(m_floor->getRoom(m_floor->getCurrentRoom())->getEnemy()->isAlive())) {
 					m_logger->WriteLine("You have defeated the enemy!");
+
+					/* loot enemy */
+					if (m_floor->getRoom(m_floor->getCurrentRoom())->getType() == r_Type::FLOORBOSS) {
+						// give a large amount of loot and progress to next floor
+						int loot = (rand() % 5) + 9;
+						m_player->Reward(loot);
+						m_logger->WriteLine("You find " + to_string(loot) + " gold and progress to the next floor.");
+					}
+					else if (m_floor->getRoom(m_floor->getCurrentRoom())->getType() == r_Type::SIDEBOSS) {
+						// improve all stats by 1 stage
+						m_logger->WriteLine("You feel a new power course through your veins.\n");
+						m_player->MassImprovement();
+					}
+					else {
+						// basic monster kill, grant 1-3 gold
+						int loot = (rand() % 3) + 1;
+						m_player->Reward(loot);
+						m_logger->WriteLine("You find " + to_string(loot) + " gold.");
+					}
 					m_floor->getRoom(m_floor->getCurrentRoom())->markCleared();
 					transitionState = GAMESTATE::FLOOR;
 				}
@@ -343,13 +365,12 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 				srand(time(NULL));
 				int direction = rand() % 4;
 				if (m_floor->getRoom(m_floor->getCurrentRoom())->getNearbyRooms()[direction] == -1) {
-					m_logger->WriteLine("You tried to flee, but failed. L + ratio");
+					m_logger->WriteLine("You tried to flee, but failed.");
 					m_floor->getRoom(m_floor->getCurrentRoom())->getEnemy()->combatAction(m_player);
 					if(!m_player->isAlive()) {
-						m_logger->WriteLine("you fucking suck bozo");
+						system("clear");
 						m_logger->printFile("gameover", 150);
 						transitionState = GAMESTATE::MENU;
-						// transitionState = GAMESTATE::GAMEOVER;
 					}
 				}
 				else {
@@ -400,6 +421,7 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 				}
 			}
 			else if (command == "leave") {
+				srand(time(NULL));
 				switch (rand() % 5) {
 					case 0:
 						m_logger->WriteLine("Farewell, stranger.");
@@ -414,7 +436,7 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 						m_logger->WriteLine("Good luck, stranger.");
 						break;
 					case 4:
-						m_logger->WriteLine("Then be on your way, friend.");
+						m_logger->WriteLine("Then be on your way, stranger.");
 						break;
 					default:
 						break;
