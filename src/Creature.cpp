@@ -135,7 +135,7 @@ void Creature::combatAction(Creature* enemy) {
 // returns Health Bar string
 string Creature::healthBar() {
     string hBar = "[";
-    int hIncrement = ceil(this->maxHP / 16);
+    int hIncrement = 2;
     int hpCounter = this->currentHP;
     while (hpCounter > 0) {
         hBar += "▒";

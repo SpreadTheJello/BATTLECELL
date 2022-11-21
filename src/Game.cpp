@@ -95,9 +95,10 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 	// help
 	else if (command == "help"){
 		m_logger->WriteHelp(m_gameState);
+		return true;
 	}
 
-
+	
 	GAMESTATE transitionState = m_gameState;
 	switch (m_gameState) {
 		case GAMESTATE::TITLE:
