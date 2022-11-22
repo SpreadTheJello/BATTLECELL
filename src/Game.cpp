@@ -383,6 +383,12 @@ bool Game::ProcessCommand(std::string command, std::string mainArg, std::string 
 						transitionState = GAMESTATE::COMBAT;
 						m_logger->WriteLine("You are in combat with " + m_floor->getRoom(m_floor->getCurrentRoom())->getEnemy()->getName() + ". You can use {attack} to attack, {status} to view stats of enemy, or {flee} to try to escape to a random nearby room.");
 					}
+					if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "REST"){
+						transitionState = GAMESTATE::REST;
+					}
+					if(m_floor->getRoom(m_floor->getCurrentRoom())->getRoomString() == "SHOP"){
+						transitionState = GAMESTATE::SHOP;
+					}
 				}
 			}
 			else{

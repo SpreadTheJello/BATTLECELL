@@ -100,7 +100,7 @@ class DeathKnight : public Creature {
 };
 
 
-// Side-Boss: Necromancer. Has three possible attacks: default, Vampiric Touch, Blight (each with equal probability).
+// Side-Boss: Necromancer. Has two possible attacks: Sapping Ray, Blight (1/3 odds).
 class Necromancer : public Creature {
   int blight;
   public:
@@ -108,24 +108,26 @@ class Necromancer : public Creature {
       this->name = "Necromancer";
       this->maxHP = 66;
       this->currentHP = 66;
-      this->damage = 3;
-      this->dodge = 20;
+      this->damage = 4;
+      this->dodge = 15;
       this->armor = 0;
 
-      blight = 0;
+      blight = 1;
     }
 
     void combatAction(Creature* enemy) {
       srand(time(NULL));
-      switch (rand() % 3)
-      {
-      case 0: // default attack
-        this->Creature::combatAction(enemy);
-        break;
-
-      case 1: // Vampiric Touch : basic attack, deals 10 damage on hit and heals the Necromancer for 6.
+      if(rand() % 3 == 0) {
+        // Blight
         this_thread::sleep_for(chrono::milliseconds(400));
-        m_logger->WriteLine(this->name + " casts Vampiric Touch against " + enemy->getName());
+        blight++;
+        this->damage = this->damage * blight;
+        m_logger->WriteLine(this->name + " blights " + enemy->getName() + ".");
+        m_logger->WriteLine(this->name + "'s attacks grow in strength.");
+      }
+      else {// Sapping Ray. Basic attack with chance to heal for attack's damage.
+        this_thread::sleep_for(chrono::milliseconds(400));
+        m_logger->WriteLine(this->name + " casts Sapping Ray against " + enemy->getName());
 
         // Dodge Check
         srand(time(NULL));
@@ -135,26 +137,18 @@ class Necromancer : public Creature {
         }
         else { // Deals Damage
           this_thread::sleep_for(chrono::milliseconds(400));
-          m_logger->WriteLine("A hit! " + this->name + " strikes " +  enemy->getName() + "!\n");
-          enemy->DealDamage(10); // deals 10 damage
-          this->Heal(6); // heals 6 hp
+          m_logger->WriteLine("A hit! " + this->name + " saps the life out of " +  enemy->getName() + "!\n");
+          enemy->DealDamage(this->damage); // deals damage
+          if(rand() % 2 == 0) { // 50% chance for heal effect
+            this->Heal(this->damage); // heals for attack's damage
+            m_logger->WriteLine(this->name + " heals itself.");
+          }
         }
-        break;
-
-      case 2: // Blight: deals damage equal to number of blight stacks * 2. Blight stacks start at 0 and increase by 1 before damage from blight is dealt.
-        this_thread::sleep_for(chrono::milliseconds(400));
-        blight++;
-        m_logger->WriteLine(this->name + " blights " + enemy->getName());
-        enemy->DealDamage(blight*2);
-        break;
-      
-      default:
-        break;
       }
     }
 };
 
-// Side-Boss: Vampire. Has 2 attacks: default, Sapping Bite (1/3 odds)
+// Side-Boss: Vampire. Has 2 attacks: default, Vampiric Touch (1/3 odds)
 class Vampire : public Creature {
   public:
     Vampire() {
@@ -168,9 +162,9 @@ class Vampire : public Creature {
 
     void combatAction(Creature* enemy) {
       srand(time(NULL));
-      if (rand() % 3 == 2) { // Sapping Bite
+      if (rand() % 3 == 2) { // Vampiric Touch
         this_thread::sleep_for(chrono::milliseconds(400));
-        m_logger->WriteLine(this->name + " strikes with its Sapping Bite " + enemy->getName());
+        m_logger->WriteLine(this->name + " strikes with its Vampiric Touch " + enemy->getName() + ".");
 
         // Dodge Check
         srand(time(NULL));
@@ -180,9 +174,10 @@ class Vampire : public Creature {
         }
         else { // Deals Damage
           this_thread::sleep_for(chrono::milliseconds(400));
-          m_logger->WriteLine("A hit! " + this->name + " strikes " +  enemy->getName() + "!\n");
+          m_logger->WriteLine("A hit! " + this->name + " steals " +  enemy->getName() + "'s life force!\n");
           enemy->DealDamage(this->damage*2); // deals double damage
-          this->Heal(7); // heals for half damage
+          this->Heal(this->damage); // heals for half attack's damage
+          m_logger->WriteLine(this->name + " heals itself from its attack.");
         }
       } else {
         this->Creature::combatAction(enemy);
