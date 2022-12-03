@@ -27,7 +27,7 @@ void Game::TransitionState(GAMESTATE state) {
 			break;
 		case GAMESTATE::GAME:
 			m_gameState = GAMESTATE::GAME;
-			m_logger->Write("You are in the game!");
+			m_logger->Write("You are in the game! Type 'start' to begin.");
 			break;
 		case GAMESTATE::FLOOR:
 			m_gameState = GAMESTATE::FLOOR;
