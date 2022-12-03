@@ -36,6 +36,7 @@ class Room {
     void printNearby();
 
     r_Type getType();
+    char getLetter();
     std::string getRoomString();
     bool setType(r_Type type); // returns false if room already has a type
 

@@ -125,6 +125,28 @@ r_Type Room::getType() {
     return this->roomType;
 }
 
+// Returns roomType
+char Room::getLetter() {
+    if(this->roomType == r_Type::MONSTER) {
+        return 'M';
+    }
+    else if(this->roomType == r_Type::SIDEBOSS) {
+        return 'B';
+    }
+    else if(this->roomType == r_Type::FLOORBOSS) {
+        return 'F';
+    }
+    else if(this->roomType == r_Type::SHOP) {
+        return 'S';
+    }
+    else if(this->roomType == r_Type::REST) {
+        return 'R';
+    }
+    else {
+        return 'X';
+    }
+}
+
 // Marks room as cleared.
 void Room::markCleared() {
     this->roomType = r_Type::CLEARED;
