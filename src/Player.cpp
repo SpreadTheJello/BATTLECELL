@@ -400,7 +400,7 @@ bool Player::BuyDodge() {
           return false;
      } else if (this->Pay(statGoldCost)) {
           unsigned int improvement = (this->maxDodge - this->baseDodge) / 10;
-          ImproveHP(improvement);
+          ImproveDodge(improvement);
           return true;
      }
      m_logger->WriteLine("You cannot afford this improvement.");
@@ -414,7 +414,7 @@ bool Player::BuySustain() {
           return false;
      } else if (this->Pay(statGoldCost)) {
           unsigned int improvement = (this->maxSustain - this->baseSustain) / 10;
-          ImproveHP(improvement);
+          ImproveSustain(improvement);
           return true;
      }
      m_logger->WriteLine("You cannot afford this improvement.");
