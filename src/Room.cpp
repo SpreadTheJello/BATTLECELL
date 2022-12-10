@@ -54,6 +54,8 @@ Room::Room(Room& rCopy) {
 Room::~Room() {
     delete[] nearbyRooms;
 
+    delete enemy;
+
     delete logger;
 }
 
